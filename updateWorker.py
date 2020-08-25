@@ -22,6 +22,17 @@ def start_worker():
     proc = subprocess.Popen(['node', 'main.js'], stdout=f, stderr=subprocess.PIPE)
     return f, proc
 
+def check_worker(proc):
+    proc.poll()
+    if proc.returncode is None:
+        _, errs = proc.communicate()
+        if errs.length != 0:
+            print('The bot has crashed!')
+            with open('logerr.txt', 'wb') as f:
+                f.write(errs)
+        return True
+    return False
+
 
 if __name__ == '__main__':
     check_period = 5
@@ -30,11 +41,14 @@ if __name__ == '__main__':
     f, proc = start_worker()
 
     while True:
+        finish = check_worker(proc)
+
         if not check_git_update():
             print('Update detected. Pulling.')
-            proc.terminate()
-            _, errs = proc.communicate()
-            print(errs)
+            if not finish: proc.terminate()
+            check_worker(proc)
+#            _, errs = proc.communicate()
+#            print(errs)
             git('pull')
             f, proc = start_worker()
         time.sleep(check_period)
