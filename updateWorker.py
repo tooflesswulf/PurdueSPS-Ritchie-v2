@@ -27,15 +27,15 @@ if __name__ == '__main__':
     check_period = 5
 
     print('Entering manager script. Checking git status every %d s.'.format(check_period))
-    f1, proc = start_worker()
+    f, proc = start_worker()
 
     while True:
         if not check_git_update():
             print('Update detected. Pulling.')
+            proc.terminate()
             _, errs = proc.communicate()
             print(errs)
-            proc.terminate()
             git('pull')
-            f1, proc = start_worker()
+            f, proc = start_worker()
         time.sleep(check_period)
 
