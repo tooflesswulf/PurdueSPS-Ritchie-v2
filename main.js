@@ -4,9 +4,14 @@ const client = new Discord.Client();
 
 client.on('ready', async () => {
   console.log(`Logged in as ${client.user.tag}!`);
+
+  console.log('Wow i cant fetch a channel');
+
   const ch = await client.channels.fetch('733207005304586272');
   console.log(`ch id: ${ch.id}`);
   ch.send('Got an update! Reloading bot.');
+
+  console.log('hello?');
 });
 
 client.on('message', async msg => {
