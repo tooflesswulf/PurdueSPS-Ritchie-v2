@@ -37,7 +37,7 @@ def check_worker(proc):
 if __name__ == '__main__':
     check_period = 5
 
-    print('Entering manager script. Checking git status every %d s.'.format(check_period))
+    print('Entering manager script. Checking git status every {} s.'.format(check_period))
     f, proc = start_worker()
 
     while True:
