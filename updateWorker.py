@@ -39,7 +39,7 @@ def check_worker(proc):
 
 
 if __name__ == '__main__':
-    check_period = 1
+    check_period = 5
     crash_count = 0
 
     print('Entering manager script. Checking git status every {} s.'.format(check_period))
