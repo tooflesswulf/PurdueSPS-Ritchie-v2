@@ -13,8 +13,6 @@ client.on('message', msg => {
   }
 });
 
-bruh
-
 let tok = fs.readFileSync('token.txt').toString();
 tok = tok.substring(0, tok.length - 1);
 client.login(tok);
