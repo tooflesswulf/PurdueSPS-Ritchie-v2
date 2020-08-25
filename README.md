@@ -1,4 +1,4 @@
 # PurdueSPS-Ritchie-v2
 This is ritchie now
 
-rrrreeeeee-load! :) v2?
+rrrreeeeee-load! :) wow.
