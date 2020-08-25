@@ -7,7 +7,7 @@ client.on('ready', async () => {
 
   console.log('Wow i cant fetch a channel');
 
-  client.channels.fetch('733207005304586272').then(ch => {
+  client.channels.fetch('733467857719001158').then(ch => {
     console.log(`ch id: ${ch.id}`);
     ch.send('Got an update! Reloading bot.');
   }).catch(err => {
