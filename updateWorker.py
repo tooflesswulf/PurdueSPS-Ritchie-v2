@@ -17,16 +17,25 @@ def check_git_update(verbose = False):
 
     return 'branch is up to date' in status
 
+def start_worker():
+    f = open('log.txt', 'w')
+    proc = subprocess.Popen(['node', 'main.js'], stdout=f, stderr=subprocess.PIPE)
+    return f, proc
+
 
 if __name__ == '__main__':
     check_period = 5
 
     print('Entering manager script. Checking git status every %d s.'.format(check_period))
-    proc = subprocess.Popen(['node', 'main.js'])
+    f1, proc = start_worker()
 
     while True:
         if not check_git_update():
             print('Update detected. Pulling.')
+            _, errs = proc.communicate()
+            print(errs)
+            proc.terminate()
             git('pull')
+            f1, proc = start_worker()
         time.sleep(check_period)
 

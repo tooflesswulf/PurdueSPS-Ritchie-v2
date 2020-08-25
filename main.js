@@ -8,6 +8,7 @@ client.on('ready', () => {
 
 client.on('message', msg => {
   if (msg.content == 'ping') {
+    console.log(`Message from ${msg.author.username}`);
     msg.channel.send('pong');
   }
 });

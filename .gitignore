@@ -1,3 +1,7 @@
 # Ignore the bot token
 token.txt
 
+# Ignore worker outputs
+log.txt
+logerr.txt
+
