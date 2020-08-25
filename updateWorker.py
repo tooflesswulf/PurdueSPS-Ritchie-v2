@@ -25,7 +25,7 @@ def start_worker():
 
 def check_worker(proc):
     proc.poll()
-    if proc.returncode is None:
+    if proc.returncode is not None:
         _, errs = proc.communicate()
         if len(errs) != 0:
             print('The bot has crashed!')
@@ -39,26 +39,29 @@ def check_worker(proc):
 
 
 if __name__ == '__main__':
-    check_period = 5
+    check_period = 1
     crash_count = 0
 
     print('Entering manager script. Checking git status every {} s.'.format(check_period))
     f, proc = start_worker()
 
     while True:
-        finish = check_worker(proc)
-        if finish and crash_count < 3:
-            print('Worker has crashed. See logerr.txt for details.')
-            f, proc = start_worker()
-            crash_count += 1
+        time.sleep(check_period)
+
+        if crash_count < 3:
+            finish = check_worker(proc)
+            if finish:
+                print('Worker has crashed. See logerr.txt for details.')
+                f, proc = start_worker()
+                crash_count += 1
+                continue
 
         if not check_git_update():
             print('Update detected. Pulling.')
             if not finish: proc.terminate()
-            check_worker(proc)
+            #check_worker(proc)
             git('pull')
             f, proc = start_worker()
             crash_count = 0
 
-        time.sleep(check_period)
 

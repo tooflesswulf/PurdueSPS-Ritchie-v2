@@ -5,3 +5,5 @@ token.txt
 log.txt
 logerr.txt
 
+# Ignore all swap files (vim)
+*.swp
