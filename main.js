@@ -6,7 +6,13 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-const tok = fs.readFileSync('token.txt');
-console.log(tok.toString());
+client.on('message', msg => {
+  if (msg.content == 'ping') {
+    msg.channel.send('pong');
+  }
+});
 
-console.log('done.');
+let tok = fs.readFileSync('token.txt').toString();
+tok = tok.substring(0, tok.length - 1);
+client.login(tok);
+
