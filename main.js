@@ -17,6 +17,13 @@ client.on('message', async msg => {
   if (msg.content == 'ping') {
     console.log(`Message from ${msg.author.username}`);
     msg.channel.send('pong');
+    return;
+  }
+
+  if (msg.content == '!log') {
+    let log = fs.readFileSync('log.txt').toString();
+    msg.channel.send(log);
+    return;
   }
 });
 
