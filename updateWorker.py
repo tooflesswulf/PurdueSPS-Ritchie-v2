@@ -26,7 +26,7 @@ def check_worker(proc):
     proc.poll()
     if proc.returncode is None:
         _, errs = proc.communicate()
-        if errs.length != 0:
+        if len(errs) != 0:
             print('The bot has crashed!')
             with open('logerr.txt', 'wb') as f:
                 f.write(errs)
