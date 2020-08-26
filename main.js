@@ -39,7 +39,7 @@ client.on('message', async msg => {
     return;
   }
 
-  console.log(`Unrecognized shit: ${msg.content}`);
+  // console.log(`Unrecognized shit: ${msg.content}`);
 });
 
 let tok = fs.readFileSync('token.txt').toString();
