@@ -16,13 +16,15 @@ client.on('ready', async () => {
 client.on('message', async msg => {
   if (msg.content == 'ping') {
     console.log(`Message from ${msg.author.username}`);
-    msg.channel.send('pong');
+    msg.channel.send('pong2');
     return;
   }
 
   if (msg.content == '!log') {
     const log = fs.readFileSync('log.txt').toString();
     const lines = log.split('\n');
+
+    console.log(lines);
 
     let str = '';
     for (let l of lines) {
