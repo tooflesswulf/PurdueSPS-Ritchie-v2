@@ -25,17 +25,17 @@ client.on('message', async msg => {
     const lines = log.split('\n');
 
     let str = '';
-    for (let l of lines) {
+    for (const l of lines) {
       console.log(`Adding ${l} to ${str}`);
       if (str + l + 1 < 2000) {
-        str += l + '\n';
+        str = str + l + '\n';
       }
       else {
         await msg.channel.send(str);
         str = l;
       }
     }
-    console.log(str);
+    console.log(`Finished: ${str}`);
     if (str.length > 0)
       await msg.channel.send(str);
     return;
