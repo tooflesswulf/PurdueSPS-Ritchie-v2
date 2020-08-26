@@ -26,7 +26,6 @@ client.on('message', async msg => {
 
     let str = '';
     for (const l of lines) {
-      console.log(`Adding '${l}' to ${str}`);
       if (str.length + l.length + 1 < 2000) {
         str = str + l + '\n';
       }
@@ -35,7 +34,6 @@ client.on('message', async msg => {
         str = l;
       }
     }
-    console.log(`Finished: ${str}`);
     if (str.length > 0)
       await msg.channel.send(str);
     return;
