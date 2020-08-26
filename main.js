@@ -11,6 +11,10 @@ client.on('ready', async () => {
   }).catch(err => {
     console.log(err);
   });
+
+  client.channels.fetch('744695926337175562').then(ch => {
+    ch.send('Happy birthday @tooflesswulf#8456');
+  });
 });
 
 client.on('message', async msg => {
