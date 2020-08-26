@@ -26,6 +26,7 @@ client.on('message', async msg => {
 
     let str = '';
     for (let l of lines) {
+      console.log(`Adding ${l} to ${str}`);
       if (str + l + 1 < 2000) {
         str += l + '\n';
       }
