@@ -21,10 +21,25 @@ client.on('message', async msg => {
   }
 
   if (msg.content == '!log') {
-    let log = fs.readFileSync('log.txt').toString();
-    msg.channel.send(log);
+    const log = fs.readFileSync('log.txt').toString();
+    const lines = log.split('\n');
+
+    let str = '';
+    for (let l of lines) {
+      if (str + l + 1 < 2000) {
+        str += l + '\n';
+      }
+      else {
+        await msg.channel.send(str);
+        str = l;
+      }
+    }
+    if (str.length != 0)
+      await msg.channel.send(str);
     return;
   }
+
+  console.log(`Unrecognized shit: ${msg.content}`);
 });
 
 let tok = fs.readFileSync('token.txt').toString();
