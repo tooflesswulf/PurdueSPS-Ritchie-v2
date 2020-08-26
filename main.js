@@ -24,8 +24,6 @@ client.on('message', async msg => {
     const log = fs.readFileSync('log.txt').toString();
     const lines = log.split('\n');
 
-    console.log(lines);
-
     let str = '';
     for (let l of lines) {
       if (str + l + 1 < 2000) {
@@ -36,7 +34,8 @@ client.on('message', async msg => {
         str = l;
       }
     }
-    if (str.length != 0)
+    console.log(str);
+    if (str.length > 0)
       await msg.channel.send(str);
     return;
   }
