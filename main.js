@@ -14,17 +14,12 @@ client.on('ready', async () => {
 });
 
 client.on('guildMemberAdd', async member => {
-  console.log(`New dude joined: ${member.id}: ${member.displayName}`);
-
-  const ret = await member.roles.add('691840210631262248');
-  console.log(`Return code: ${ret}`);
-  return;
-
   // If the guild isn't PurdueSPS, ignore it
   if (member.guild.id != '481808675346841600') return;
 
+  // Add 'Temporary Member' role
   await member.roles.add('737803642463060048');
-  console.log(`Added role Temporary Member to ${member.nickname}`);
+  console.log(`Added role Temporary Member to ${member.displayName}`);
 });
 
 client.on('message', async msg => {
