@@ -7,3 +7,8 @@ logerr.txt
 
 # Ignore all swap files (vim)
 *.swp
+
+# node shit
+node_modules/
+package-lock.json
+
