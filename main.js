@@ -16,6 +16,9 @@ client.on('ready', async () => {
 client.on('guildMemberAdd', async member => {
   console.log(`New dude joined: ${member.id}: ${member.displayName}`);
 
+  await member.roles.add('691840210631262248');
+  return;
+
   // If the guild isn't PurdueSPS, ignore it
   if (member.guild.id != '481808675346841600') return;
 
