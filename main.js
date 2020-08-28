@@ -30,6 +30,7 @@ client.on('message', async msg => {
   }
 
   if (msg.content == '!log') {
+    if (msg.guild.id != '286028084287635456') return;
     const log = fs.readFileSync('log.txt').toString();
     const lines = log.split('\n');
 
