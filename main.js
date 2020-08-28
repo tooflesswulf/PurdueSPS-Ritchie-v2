@@ -17,6 +17,14 @@ client.on('ready', async () => {
   // });
 });
 
+client.on('guildMemberAdd', async member => {
+  // If the guild isn't PurdueSPS, ignore it
+  if (member.guild.id != '481808675346841600') return;
+
+  await member.roles.add('737803642463060048');
+  console.log(`Added role Temporary Member to ${member.nickname}`);
+});
+
 client.on('message', async msg => {
   if (msg.content == 'ping') {
     console.log(`Message from ${msg.author.username}`);
