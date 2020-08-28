@@ -11,15 +11,11 @@ client.on('ready', async () => {
   }).catch(err => {
     console.log(err);
   });
-
-  // client.channels.fetch('744695926337175562').then(ch => {
-  //   ch.send('Happy birthday <@622163951433809928>!');
-  // });
 });
 
 client.on('guildMemberAdd', async member => {
-  console.log(`New dude joined: ${member.username}`);
-  
+  console.log(`New dude joined: ${member.id}: ${member.displayName}`);
+
   // If the guild isn't PurdueSPS, ignore it
   if (member.guild.id != '481808675346841600') return;
 
