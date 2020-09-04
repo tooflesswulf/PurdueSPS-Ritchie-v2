@@ -20,6 +20,8 @@ client.on('guildMemberAdd', async member => {
   // Add 'Temporary Member' role
   await member.roles.add('737803642463060048');
   console.log(`Added role Temporary Member to ${member.displayName}`);
+
+  await member.send(`Hey there! Thanks for joining the Purdue SPS server. We're glad to have you.\nIf you wouldn't mind, please change your server nickname to your first and/or last name. If you're having trouble with this, ask one of the administrators for help. Thanks!`);
 });
 
 client.on('message', async msg => {
