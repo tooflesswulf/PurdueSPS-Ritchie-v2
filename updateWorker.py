@@ -6,7 +6,10 @@ import time
 from datetime import datetime
 
 def check_git_update(verbose = False):
-    p = git('fetch', 'origin', 'master')
+    try:
+        p = git('fetch', 'origin', 'master')
+    except:
+        return False
 
     if (verbose):
       print('Fetch complete')
@@ -16,7 +19,7 @@ def check_git_update(verbose = False):
     if verbose:
         print(status)
 
-    return 'branch is up to date' in status
+    return 'branch is up to date' not in status
 
 def start_worker():
     f = open('log.txt', 'w')
