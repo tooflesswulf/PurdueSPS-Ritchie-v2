@@ -5,7 +5,7 @@ import subprocess
 import time
 from datetime import datetime
 
-def check_git_update(verbose = False):
+def check_git_has_update(verbose = False):
     try:
         p = git('fetch', 'origin', 'master')
     except:
@@ -59,7 +59,7 @@ if __name__ == '__main__':
                 crash_count += 1
                 continue
 
-        if not check_git_update():
+        if check_git_has_update():
             print('Update detected. Pulling.')
             if not finish: proc.terminate()
             #check_worker(proc)
