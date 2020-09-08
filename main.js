@@ -36,19 +36,21 @@ client.on('message', async msg => {
     const log = fs.readFileSync('log.txt').toString();
     const lines = log.split('\n');
 
-    let str = '';
-    for (const l of lines) {
-      if (str.length + l.length + 1 < 2000) {
-        str = str + l + '\n';
-      }
-      else {
-        await msg.channel.send(str);
-        str = l;
-      }
-    }
-    if (str.length > 0)
-      await msg.channel.send(str);
-    return;
+    longPrint(lines, msg.channel.send);
+
+    // let str = '';
+    // for (const l of lines) {
+    //   if (str.length + l.length + 1 < 2000) {
+    //     str = str + l + '\n';
+    //   }
+    //   else {
+    //     await msg.channel.send(str);
+    //     str = l;
+    //   }
+    // }
+    // if (str.length > 0)
+    //   await msg.channel.send(str);
+    // return;
   }
 
   // console.log(`Unrecognized shit: ${msg.content}`);
@@ -57,4 +59,20 @@ client.on('message', async msg => {
 let tok = fs.readFileSync('token.txt').toString();
 tok = tok.substring(0, tok.length - 1);
 client.login(tok);
+
+async function longPrint(strIn, sendfn) {
+  let str = '';
+  for (const l of strIn) {
+    if (str.length + l.length + 1 < 2000) {
+      str = str + l + '\n';
+    }
+    else {
+      await sendfn(str);
+      str = l;
+    }
+  }
+  if (str.length > 0)
+    await sendfn(str);
+  return;
+}
 
