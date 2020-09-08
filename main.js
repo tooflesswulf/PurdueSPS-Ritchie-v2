@@ -60,7 +60,7 @@ let tok = fs.readFileSync('token.txt').toString();
 tok = tok.substring(0, tok.length - 1);
 client.login(tok);
 
-async function longPrint(strIn, sendfn) {
+const longPrint = async (strIn, sendfn) => {
   let str = '';
   for (const l of strIn) {
     if (str.length + l.length + 1 < 2000) {
