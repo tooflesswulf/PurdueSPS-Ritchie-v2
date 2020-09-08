@@ -25,11 +25,11 @@ client.on('guildMemberAdd', async member => {
 });
 
 client.on('message', async msg => {
-  if (msg.content == 'ping') {
-    console.log(`Message from ${msg.author.username}`);
-    msg.channel.send('pong2');
-    return;
-  }
+  // if (msg.content == 'ping') {
+  //   console.log(`Message from ${msg.author.username}`);
+  //   msg.channel.send('pong2');
+  //   return;
+  // }
 
   if (msg.content == '!log') {
     if (msg.guild.id != '286028084287635456') return;
