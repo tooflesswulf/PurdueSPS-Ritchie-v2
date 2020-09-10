@@ -29,7 +29,7 @@ client.on('guildMemberRemove', async member => {
   if (member.guild.id != '481808675346841600') return;
 
   const admin_channel = await client.channels.fetch('748038519213260872');
-  admin_channel.send(`${member.displayName} id:(${member.id}) left.`);
+  admin_channel.send(`A person left!\nname: ${member.displayName}\nid: ${member.id}`);
 });
 
 client.on('message', async msg => {
