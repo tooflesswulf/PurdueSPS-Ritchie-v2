@@ -24,6 +24,11 @@ client.on('guildMemberAdd', async member => {
   await member.send(`Hey there! Thanks for joining the Purdue SPS server. We're glad to have you.\nIf you wouldn't mind, please change your server nickname to your first and/or last name. If you're having trouble with this, ask one of the administrators for help. Thanks!`);
 });
 
+client.on('guildMemberRemove', async member => {
+  const admin_channel = await client.channels.fetch('748038519213260872');
+  admin_channel.send(`${member.displayName} id:(${member.id}) left.`);
+});
+
 client.on('message', async msg => {
   // if (msg.content == 'ping') {
   //   console.log(`Message from ${msg.author.username}`);
