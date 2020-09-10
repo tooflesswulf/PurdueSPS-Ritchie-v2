@@ -25,6 +25,9 @@ client.on('guildMemberAdd', async member => {
 });
 
 client.on('guildMemberRemove', async member => {
+  // If the guild isn't PurdueSPS, ignore it
+  if (member.guild.id != '481808675346841600') return;
+
   const admin_channel = await client.channels.fetch('748038519213260872');
   admin_channel.send(`${member.displayName} id:(${member.id}) left.`);
 });
