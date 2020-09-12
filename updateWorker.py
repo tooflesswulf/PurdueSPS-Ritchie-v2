@@ -21,8 +21,9 @@ class ScriptManager:
             return
 
         self.f = open('log.txt', 'w')
-        self.proc = subprocess.Popen(
-            ['node', 'main.js'], stdout=self.f, stderr=subprocess.PIPE)
+        # self.proc = subprocess.Popen(['node', 'main.js'], stdout=self.f, stderr=subprocess.PIPE)
+        self.proc = subprocess.Popen(['python3', 'bot.py'],
+                                     stdout=self.f, stderr=subprocess.PIPE)
 
     def check_worker_failed(self) -> bool:
         if self.proc is None:
