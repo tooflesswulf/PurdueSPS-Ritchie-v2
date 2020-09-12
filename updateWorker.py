@@ -39,12 +39,14 @@ class ScriptManager:
                     )
                     f.write(outstr.encode('utf-8'))
                     f.write(errs)
+            self.proc = None
             return True
         return False
 
     def kill_worker(self):
         if self.proc is not None:
             self.proc.terminate()
+        self.proc = None
 
 
 def check_git_has_update(verbose=False) -> bool:
