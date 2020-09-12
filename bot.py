@@ -29,10 +29,10 @@ async def log(ctx: discord.ext.commands.Context):
             if len(s) + len(l) + 1 < 2000:
                 s += l + '\n'
             else:
-                ctx.send(s)
+                await ctx.send(s)
                 s = l + '\n'
         if len(s) > 0:
-            ctx.send(s)
+            await ctx.send(s)
 
 
 with open('token.txt', 'r') as f:
