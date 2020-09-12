@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import util
-import os
+import os, sys
 
 client = commands.Bot(command_prefix='!')
 
@@ -9,6 +9,7 @@ client = commands.Bot(command_prefix='!')
 @client.event
 async def on_ready():
     print('Logged in as {}!'.format(client.user))
+    sys.stdout.flush()
 
     hello_ch = client.get_channel(754173414867992686)
     if hello_ch is not None:
@@ -27,6 +28,7 @@ async def log(ctx: discord.ext.commands.Context):
     with open('log.txt', 'r') as f:
         lines = f.readlines()
         print(lines)
+        sys.stdout.flush()
         for l in util.long_print(lines):
             await ctx.send(l)
 
