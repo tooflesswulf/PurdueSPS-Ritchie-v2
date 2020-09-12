@@ -5,14 +5,14 @@ const client = new Discord.Client();
 client.on('ready', async () => {
   console.log(`Logged in as ${client.user.tag}!`);
 
-  client.channels.fetch('733467857719001158').then(ch => {
+  client.channels.fetch('754173414867992686').then(ch => {
     console.log(`ch id: ${ch.id}`);
     ch.send('Got an update! Reloading bot.');
   }).catch(err => {
     console.log(err);
   });
 });
-
+blyat
 client.on('guildMemberAdd', async member => {
   // If the guild isn't PurdueSPS, ignore it
   if (member.guild.id != '481808675346841600') return;
