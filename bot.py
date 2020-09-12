@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+import util
+import os
 
 client = commands.Bot(command_prefix='!')
 
@@ -22,17 +24,20 @@ async def ping(ctx: discord.ext.commands.Context):
 async def log(ctx: discord.ext.commands.Context):
     if ctx.guild.id != 286028084287635456:
         return
-
     with open('log.txt', 'r') as f:
-        s = ''
-        for l in f.readlines():
-            if len(s) + len(l) + 1 < 2000:
-                s += l + '\n'
-            else:
-                await ctx.send(s)
-                s = l + '\n'
-        if len(s) > 0:
-            await ctx.send(s)
+        for l in util.long_print(f.readlines()):
+            await ctx.send(l)
+
+
+@client.command()
+async def err(ctx: discord.ext.commands.Context):
+    if ctx.guild.id != 286028084287635456:
+        return
+    if not os.path.exists('logerr.txt'):
+        return
+    with open('logerr.txt', 'r') as f:
+        for l in util.long_print(f.readlines()):
+            await ctx.send(l)
 
 
 with open('token.txt', 'r') as f:
