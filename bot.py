@@ -9,8 +9,10 @@ import os
 from sps_mod_functions import ModFunctions
 import my_util
 
-client = commands.Bot(command_prefix='~')
-client.add_cog(ModFunctions(client))
+client = commands.Bot(command_prefix='!')
+if not (len(sys.argv) > 1 and sys.argv[1] == 'DEBUG'):
+    client.add_cog(ModFunctions(client))
+
 
 @client.event
 async def on_ready():
