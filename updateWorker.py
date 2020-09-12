@@ -5,15 +5,57 @@ import subprocess
 import time
 from datetime import datetime
 
-def check_git_has_update(verbose = False):
+
+class ScriptManager:
+    def __init__(self):
+        self.proc = None
+        self.f = None
+        self.num_crash = 0
+
+    def start_worker(self, reset=False):
+        if reset:
+            self.num_crash = 0
+        if self.num_crash > 3:
+            # Start bot in debug mode, basically. For now, leave bot dead.
+            return
+
+        self.f = open('log.txt', 'w')
+        self.proc = subprocess.Popen(
+            ['node', 'main.js'], stdout=self.f, stderr=subprocess.PIPE)
+
+    def check_worker_failed(self) -> bool:
+        if self.proc is None:
+            return True
+        self.proc.poll()
+        if self.proc.returncode is not None:
+            _, errs = self.proc.communicate()
+            if len(errs) != 0:
+                print('The bot has crashed! See logerr.txt for more details.')
+                self.num_crash += 1
+                with open('logerr.txt', 'wb') as f:
+                    dt = datetime.now()
+                    outstr = 'Crash at time {}\n'.format(
+                        dt.strftime('%b %d, %H:%M:%S')
+                    )
+                    f.write(outstr.encode('utf-8'))
+                    f.write(errs)
+            return True
+        return False
+
+    def kill_worker(self):
+        if self.proc is not None:
+            self.proc.terminate()
+
+
+def check_git_has_update(verbose=False) -> bool:
     try:
         p = git('fetch', 'origin', 'master')
     except:
         return False
 
     if (verbose):
-      print('Fetch complete')
-      print(p)
+        print('Fetch complete')
+        print(p)
 
     status = git("status")
     if verbose:
@@ -21,50 +63,25 @@ def check_git_has_update(verbose = False):
 
     return 'branch is up to date' not in status
 
-def start_worker():
-    f = open('log.txt', 'w')
-    proc = subprocess.Popen(['node', 'main.js'], stdout=f, stderr=subprocess.PIPE)
-    return f, proc
-
-def check_worker(proc):
-    proc.poll()
-    if proc.returncode is not None:
-        _, errs = proc.communicate()
-        if len(errs) != 0:
-            print('The bot has crashed!')
-            with open('logerr.txt', 'wb') as f:
-                dt = datetime.now()
-                outstr = 'Crash at time {}\n'.format(dt.strftime('%b %d, %H:%M:%S'))
-                f.write(outstr.encode('utf-8'))
-                f.write(errs)
-        return True
-    return False
-
 
 if __name__ == '__main__':
     check_period = 5
     crash_count = 0
+    sm = ScriptManager()
 
     print('Entering manager script. Checking git status every {} s.'.format(check_period))
-    f, proc = start_worker()
+    sm.start_worker()
 
     while True:
         time.sleep(check_period)
 
-        if crash_count < 3:
-            finish = check_worker(proc)
-            if finish:
-                print('Worker has crashed. See logerr.txt for details.')
-                f, proc = start_worker()
-                crash_count += 1
-                continue
-
         if check_git_has_update():
             print('Update detected. Pulling.')
-            if not finish: proc.terminate()
-            #check_worker(proc)
+            sm.kill_worker()
             git('pull')
-            f, proc = start_worker()
-            crash_count = 0
+            sm.start_worker(reset=True)
+            continue
 
-
+        if sm.check_worker_failed():
+            sm.start_worker()
+            continue

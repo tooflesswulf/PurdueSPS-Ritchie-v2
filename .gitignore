@@ -12,3 +12,5 @@ logerr.txt
 node_modules/
 package-lock.json
 
+# VSCode
+.vscode/
