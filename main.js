@@ -12,7 +12,7 @@ client.on('ready', async () => {
     console.log(err);
   });
 });
-blyat
+
 client.on('guildMemberAdd', async member => {
   // If the guild isn't PurdueSPS, ignore it
   if (member.guild.id != '481808675346841600') return;

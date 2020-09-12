@@ -16,6 +16,7 @@ class ScriptManager:
         if reset:
             self.num_crash = 0
         if self.num_crash > 3:
+            print('Crashed too many times. Starting in debug mode.')
             # Start bot in debug mode, basically. For now, leave bot dead.
             return
 
