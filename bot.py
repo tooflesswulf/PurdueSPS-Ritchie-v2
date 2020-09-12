@@ -25,6 +25,7 @@ async def on_ready():
 @client.command()
 @my_util.in_guild(286028084287635456)
 async def log(ctx: discord.ext.commands.Context):
+    sys.stdout.flush()
     with open('log.txt', 'r') as f:
         lines = f.readlines()
         for l in my_util.long_print(lines):
