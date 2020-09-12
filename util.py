@@ -1,14 +1,13 @@
-from typing import List
+from typing import List, Iterator
 
 # Formats a bunch of lines into a list of lines<2000 chars
-def long_print(lines: List[str]) -> List[str]:
+def long_print(lines: List[str]) -> Iterator[str]:
     s = ''
-    out = []
     for l in lines:
         if len(s) + len(l) + 1 < 2000:
             s += l + '\n'
         else:
-            out.append(s)
+            yield s
             s = l + '\n'
-
-    return out
+    if len(s) != 0:
+        yield s

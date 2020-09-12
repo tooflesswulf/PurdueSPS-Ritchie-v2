@@ -25,7 +25,9 @@ async def log(ctx: discord.ext.commands.Context):
     if ctx.guild.id != 286028084287635456:
         return
     with open('log.txt', 'r') as f:
-        for l in util.long_print(f.readlines()):
+        lines = f.readlines()
+        print(lines)
+        for l in util.long_print(lines):
             await ctx.send(l)
 
 
