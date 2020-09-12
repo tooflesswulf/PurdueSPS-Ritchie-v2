@@ -15,11 +15,11 @@ class ModFunctions(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         # self.guild = 481808675346841600
-        self.guild = self.bot.get_guild(286028084287635456)
-        
-        self.admin_ch = self.bot.get_channel(691491919808823326)
-        self.join_log = self.bot.get_channel(691491919808823326)
-        self.join_role = self.guild.get_role(691840210631262248)
+        self.guild = self.bot.get_guild(481808675346841600)
+
+        self.admin_ch = self.bot.get_channel(748038519213260872)
+        self.join_log = self.bot.get_channel(738887904511918171)
+        self.join_role = self.guild.get_role(737803642463060048)
 
     def cog_check(self, ctx: commands.Context):
         return ctx.guild == self.guild and ctx.author.guild_permissions.kick_members
