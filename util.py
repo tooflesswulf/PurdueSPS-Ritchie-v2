@@ -4,10 +4,10 @@ from typing import List, Iterator
 def long_print(lines: List[str]) -> Iterator[str]:
     s = ''
     for l in lines:
-        if len(s) + len(l) + 1 < 2000:
-            s += l + '\n'
+        if len(s) + len(l) < 2000:
+            s += l
         else:
             yield s
-            s = l + '\n'
+            s = l
     if len(s) != 0:
         yield s
