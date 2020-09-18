@@ -81,7 +81,7 @@ class LoungeMonitor(commands.Cog):
         print(f'User {ctx.author.display_name}({ctx.author.id}) sub to lounge change.')
 
     @commands.command()
-    def usub(self, ctx: commands.Context):
+    async def usub(self, ctx: commands.Context):
         if ctx.author.id in self.notifs:
             self.notifs.remove(ctx.author.id)
             pickle.dump(self.notifs, open(notify_list_name, 'wb'))
