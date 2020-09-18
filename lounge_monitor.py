@@ -33,9 +33,12 @@ class LoungeMonitor(commands.Cog):
             await self.bot.change_presence(activity=discord.Game(to_send))
             self.last_change = time.time()
             self.last_state = to_send
+            return True
+        return False
 
     @commands.Cog.listener()
     async def on_ready(self):
+        self.key_ch = await self.bot.get_channel(756578279758102688)
         self.door_monitor.start()
 
     @commands.command()
@@ -45,6 +48,7 @@ class LoungeMonitor(commands.Cog):
 
     @tasks.loop(seconds=1)
     async def door_monitor(self):
-        if self.last_state + self.change_timeout < time.time():
-            return
-        await self.check_door()
+        if self.last_change + self.change_timeout < time.time():
+            changed = await self.check_door()
+            if changed:
+                self.key_ch.send(self.last_state)
