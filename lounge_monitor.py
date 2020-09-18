@@ -28,7 +28,7 @@ class LoungeMonitor(commands.Cog):
         try:
             self.notifs = pickle.load(open(notify_list_name, 'rb'))
         except (OSError, IOError):
-            self.notifs = Set()
+            self.notifs = set()
             pickle.dump(self.notifs, open(notify_list_name, 'wb'))
 
     async def check_door(self):
@@ -64,16 +64,16 @@ class LoungeMonitor(commands.Cog):
             #     await self.key_ch.send(self.last_state)
 
     async def broadcast(self):
-        for id in self.notifs:
-            self.bot.get_user(id).send(self.last_state)
+        for iid in self.notifs:
+            self.bot.get_user(iid).send(self.last_state)
 
-    @commands.command()
-    async def sub(self, ctx: commands.Context):
-        self.notifs.add(ctx.author.id)
-        await ctx.author.send('You\'ll get a DM every time lounge state changes now. Have fun! (usub to stop)')
-        pickle.dump(self.notifs, open(notify_list_name, 'wb'))
+    # @commands.command()
+    # async def sub(self, ctx: commands.Context):
+    #     self.notifs.add(ctx.author.id)
+    #     await ctx.author.send('You\'ll get a DM every time lounge state changes now. Have fun! (usub to stop)')
+    #     pickle.dump(self.notifs, open(notify_list_name, 'wb'))
 
-    @commands.command()
-    def usub(self, ctx: commands.Context):
-        self.notifs.remove(ctx.author.id)
-        pickle.dump(self.notifs, open(notify_list_name, 'wb'))
+    # @commands.command()
+    # def usub(self, ctx: commands.Context):
+    #     self.notifs.remove(ctx.author.id)
+    #     pickle.dump(self.notifs, open(notify_list_name, 'wb'))
