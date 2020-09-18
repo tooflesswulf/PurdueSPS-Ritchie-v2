@@ -13,6 +13,9 @@ client = commands.Bot(command_prefix='!')
 if not (len(sys.argv) > 1 and sys.argv[1] == 'DEBUG'):
     client.add_cog(ModFunctions(client))
 
+    from lounge_monitor import LoungeMonitor
+    client.add_cog(LoungeMonitor(client))
+
 
 @client.event
 async def on_ready():
