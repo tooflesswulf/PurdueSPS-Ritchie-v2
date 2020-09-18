@@ -67,11 +67,15 @@ class LoungeMonitor(commands.Cog):
         for iid in self.notifs:
             self.bot.get_user(iid).send(self.last_state)
 
-    # @commands.command()
-    # async def sub(self, ctx: commands.Context):
-    #     self.notifs.add(ctx.author.id)
-    #     await ctx.author.send('You\'ll get a DM every time lounge state changes now. Have fun! (usub to stop)')
-    #     pickle.dump(self.notifs, open(notify_list_name, 'wb'))
+    @commands.command()
+    async def sub(self, ctx: commands.Context):
+        if ctx.author.id in self.notifs:
+            await ctx.author.send('You\'re already in lol')
+            return
+
+        self.notifs.add(ctx.author.id)
+        await ctx.author.send('You\'ll get a DM every time lounge state changes now. Have fun! (usub to stop)')
+        pickle.dump(self.notifs, open(notify_list_name, 'wb'))
 
     # @commands.command()
     # def usub(self, ctx: commands.Context):
