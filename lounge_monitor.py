@@ -1,6 +1,8 @@
 import discord
 from discord.ext import tasks, commands
 from typing import List, Tuple, Dict
+import os.path
+import pickle
 import time
 
 import wiringpi
@@ -9,6 +11,8 @@ sensor_pin = 16
 MSG_OPEN = 'Lounge is Open!'
 MSG_CLOSED = 'Lounge is Closed.'
 MSG_ERR = 'Not connected'
+
+notify_list_name = 'lounge_monitor_notify.pkl'
 
 
 class LoungeMonitor(commands.Cog):
@@ -20,6 +24,12 @@ class LoungeMonitor(commands.Cog):
 
         wiringpi.wiringPiSetup()
         wiringpi.pinMode(sensor_pin, 0)
+
+        try:
+            self.notifs = pickle.load(open(notify_list_name, 'rb'))
+        except (OSError, IOError):
+            self.notifs = Set()
+            pickle.dump(self.notifs, open(notify_list_name, 'wb'))
 
     async def check_door(self):
         to_send = ''
@@ -52,3 +62,18 @@ class LoungeMonitor(commands.Cog):
             changed = await self.check_door()
             # if changed:
             #     await self.key_ch.send(self.last_state)
+
+    async def broadcast(self):
+        for id in self.notifs:
+            self.bot.get_user(id).send(self.last_state)
+
+    @commands.command()
+    async def sub(self, ctx: commands.Context):
+        self.notifs.add(ctx.author.id)
+        await ctx.author.send('You\'ll get a DM every time lounge state changes now. Have fun! (usub to stop)')
+        pickle.dump(self.notifs, open(notify_list_name, 'wb'))
+
+    @commands.command()
+    def usub(self, ctx: commands.Context):
+        self.notifs.remove(ctx.author.id)
+        pickle.dump(self.notifs, open(notify_list_name, 'wb'))
