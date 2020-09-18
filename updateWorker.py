@@ -1,9 +1,12 @@
 #!/usr/bin/python3
 
-from sh import git
 import subprocess
-import time
 from datetime import datetime
+import time
+import sys
+from sh import git
+
+mypy = sys.argv[0]
 
 
 class ScriptManager:
@@ -17,12 +20,12 @@ class ScriptManager:
             self.num_crash = 0
         if self.num_crash > 3:
             print('Crashed too many times. Starting in debug mode.')
-            self.proc = subprocess.Popen(['python3', 'bot.py', 'DEBUG'])
+            self.proc = subprocess.Popen([mypy, 'bot.py', 'DEBUG'])
             return
 
         self.f = open('log.txt', 'w')
         # self.proc = subprocess.Popen(['node', 'main.js'], stdout=self.f, stderr=subprocess.PIPE)
-        self.proc = subprocess.Popen(['python3', 'bot.py'],
+        self.proc = subprocess.Popen([mypy, 'bot.py'],
                                      stdout=self.f, stderr=subprocess.PIPE)
 
     def check_worker_failed(self) -> bool:
