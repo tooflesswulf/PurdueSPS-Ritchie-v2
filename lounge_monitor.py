@@ -1,7 +1,7 @@
 import discord
 from discord.ext import tasks, commands
 from typing import List, Tuple, Dict
-import os.path
+from datetime import date
 import pickle
 import time
 
@@ -65,8 +65,9 @@ class LoungeMonitor(commands.Cog):
             #     await self.key_ch.send(self.last_state)
 
     async def broadcast(self):
+        timestr = date.today().strftime('%H:%M')
         for iid in self.notifs:
-            self.bot.get_user(iid).send(self.last_state)
+            self.bot.get_user(iid).send(f'`{timestr}`  {self.last_state}')
 
     @commands.command()
     async def sub(self, ctx: commands.Context):
@@ -77,9 +78,11 @@ class LoungeMonitor(commands.Cog):
         self.notifs.add(ctx.author.id)
         await ctx.author.send('You\'ll get a DM every time lounge state changes now. Have fun! (usub to stop)')
         pickle.dump(self.notifs, open(notify_list_name, 'wb'))
+        print(f'User {ctx.author.display_name}({ctx.author.id}) sub to lounge change.')
 
     @commands.command()
     def usub(self, ctx: commands.Context):
         if ctx.author.id in self.notifs:
             self.notifs.remove(ctx.author.id)
             pickle.dump(self.notifs, open(notify_list_name, 'wb'))
+            print(f'User {ctx.author.display_name}({ctx.author.id}) unsub to lounge change.')
