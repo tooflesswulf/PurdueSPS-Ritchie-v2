@@ -48,7 +48,6 @@ class LoungeMonitor(commands.Cog):
 
     @tasks.loop(seconds=1)
     async def door_monitor(self):
-        print(f'Monitor iter {self.door_monitor.current_loop}. check?: {self.last_change + self.change_timeout < time.time()}')
         if self.last_change + self.change_timeout < time.time():
             changed = await self.check_door()
             if changed:
