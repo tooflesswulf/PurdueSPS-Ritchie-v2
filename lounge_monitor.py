@@ -50,5 +50,5 @@ class LoungeMonitor(commands.Cog):
     async def door_monitor(self):
         if self.last_change + self.change_timeout < time.time():
             changed = await self.check_door()
-            if changed:
-                self.key_ch.send(self.last_state)
+            # if changed:
+            #     await self.key_ch.send(self.last_state)
