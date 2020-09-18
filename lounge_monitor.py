@@ -38,7 +38,7 @@ class LoungeMonitor(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        self.key_ch = await self.bot.get_channel(756578279758102688)
+        self.key_ch = self.bot.get_channel(756578279758102688)
         self.door_monitor.start()
 
     @commands.command()
