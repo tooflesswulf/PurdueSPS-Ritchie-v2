@@ -1,11 +1,9 @@
 import subprocess
 from datetime import datetime
 import time
-import sys
 from sh import git
 
-mypy = sys.argv[0]
-
+rpi_py = '/home/pi/.pyenv/versions/3.8.5/bin/python'
 
 class ScriptManager:
     def __init__(self):
@@ -18,12 +16,12 @@ class ScriptManager:
             self.num_crash = 0
         if self.num_crash > 3:
             print('Crashed too many times. Starting in debug mode.')
-            self.proc = subprocess.Popen([mypy, 'bot.py', 'DEBUG'])
+            self.proc = subprocess.Popen([rpi_py, 'bot.py', 'DEBUG'])
             return
 
         self.f = open('log.txt', 'w')
         # self.proc = subprocess.Popen(['node', 'main.js'], stdout=self.f, stderr=subprocess.PIPE)
-        self.proc = subprocess.Popen([mypy, 'bot.py'],
+        self.proc = subprocess.Popen([rpi_py, 'bot.py'],
                                      stdout=self.f, stderr=subprocess.PIPE)
 
     def check_worker_failed(self) -> bool:
