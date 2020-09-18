@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import tasks, commands
 from typing import List, Tuple, Dict
 import time
 
@@ -12,18 +12,16 @@ MSG_ERR = 'Not connected'
 
 
 class LoungeMonitor(commands.Cog):
-    def __init__(self, bot: discord.Client, check_freq=5):
+    def __init__(self, bot: discord.Client, change_timeout=30):
         self.bot = bot
-        self.last_check = -check_freq
-        self.check_freq = check_freq
+        self.last_change = -change_timeout
+        self.change_timeout = change_timeout
         self.last_state = MSG_ERR
 
         wiringpi.wiringPiSetup()
         wiringpi.pinMode(sensor_pin, 0)
 
     async def check_door(self):
-        self.last_check = time.time()
-
         to_send = ''
         try:
             door_state = not wiringpi.digitalRead(sensor_pin)
@@ -33,13 +31,20 @@ class LoungeMonitor(commands.Cog):
 
         if self.last_state != to_send:
             await self.bot.change_presence(activity=discord.Game(to_send))
+            self.last_change = time.time()
             self.last_state = to_send
 
     @commands.Cog.listener()
     async def on_ready(self):
-        await self.check_door()
+        self.door_monitor.start()
 
     @commands.command()
     async def lounge(self, ctx: commands.Context):
         await self.check_door()
         await ctx.send(self.last_state)
+
+    @tasks.loop(seconds=1)
+    async def door_monitor(self):
+        if self.last_state + self.change_timeout < time.time():
+            return
+        await self.check_door()
