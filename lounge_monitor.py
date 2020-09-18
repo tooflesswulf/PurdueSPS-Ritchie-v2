@@ -60,7 +60,8 @@ class LoungeMonitor(commands.Cog):
     async def door_monitor(self):
         if self.last_change + self.change_timeout < time.time():
             changed = await self.check_door()
-            # if changed:
+            if changed:
+                self.broadcast()
             #     await self.key_ch.send(self.last_state)
 
     async def broadcast(self):
@@ -77,7 +78,8 @@ class LoungeMonitor(commands.Cog):
         await ctx.author.send('You\'ll get a DM every time lounge state changes now. Have fun! (usub to stop)')
         pickle.dump(self.notifs, open(notify_list_name, 'wb'))
 
-    # @commands.command()
-    # def usub(self, ctx: commands.Context):
-    #     self.notifs.remove(ctx.author.id)
-    #     pickle.dump(self.notifs, open(notify_list_name, 'wb'))
+    @commands.command()
+    def usub(self, ctx: commands.Context):
+        if ctx.author.id in self.notifs:
+            self.notifs.remove(ctx.author.id)
+            pickle.dump(self.notifs, open(notify_list_name, 'wb'))
