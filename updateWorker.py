@@ -65,7 +65,7 @@ def check_git_has_update(verbose=False) -> bool:
     if verbose:
         print(status)
 
-    return 'branch is up to date' not in status
+    return 'branch is up to date' not in status and 'branch is up-to-date' not in status
 
 
 if __name__ == '__main__':
