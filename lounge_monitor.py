@@ -17,7 +17,7 @@ notify_list_name = 'lounge_monitor_notify.pkl'
 
 
 class LoungeMonitor(commands.Cog):
-    def __init__(self, bot: discord.Client, change_timeout=30):
+    def __init__(self, bot: discord.Client, change_timeout=10):
         self.bot = bot
         self.last_change = -change_timeout
         self.change_timeout = change_timeout
@@ -68,15 +68,12 @@ class LoungeMonitor(commands.Cog):
     @commands.command()
     @my_util.in_guild(286028084287635456)
     async def test(self, ctx: commands.Context):
-        print(self.notifs)
         await self.broadcast()
-        await ctx.send('testing lounge broadcast')
 
     async def broadcast(self):
-        timestr = date.today().strftime('%H:%M')
+        timestr = date.now().strftime('EDT %H:%M')
         for iid in self.notifs:
             usr = self.bot.get_user(iid)
-            print(f'Notifying: {usr}')
             await usr.send(f'`{timestr}`  {self.last_state}')
 
     @commands.command()
