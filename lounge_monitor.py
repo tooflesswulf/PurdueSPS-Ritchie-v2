@@ -66,7 +66,7 @@ class LoungeMonitor(commands.Cog):
             #     await self.key_ch.send(self.last_state)
 
     @commands.command()
-    @my_util.in_guild(481808675346841600)
+    @my_util.in_guild(286028084287635456)
     async def test(self, ctx: commands.Context):
         print(self.notifs)
         await self.broadcast()
