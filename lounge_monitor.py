@@ -67,8 +67,10 @@ class LoungeMonitor(commands.Cog):
 
     @commands.command()
     @my_util.in_guild(481808675346841600)
-    async def test_broadcast(self, ctx: commands.Context):
+    async def test(self, ctx: commands.Context):
+        print(self.notifs)
         await self.broadcast()
+        await ctx.send('testing lounge broadcast')
 
     async def broadcast(self):
         timestr = date.today().strftime('%H:%M')
