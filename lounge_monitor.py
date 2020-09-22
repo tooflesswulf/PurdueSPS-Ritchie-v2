@@ -1,13 +1,14 @@
 import discord
 from discord.ext import tasks, commands
 from typing import List, Tuple, Dict
-from datetime import datetime
+import datetime
 import pickle
 import my_util
 import time
 
 import wiringpi
 sensor_pin = 16
+edt = datetime.timezone(datetime.timedelta(hours=-4))
 
 MSG_OPEN = 'Lounge is Open!'
 MSG_CLOSED = 'Lounge is Closed.'
@@ -71,7 +72,7 @@ class LoungeMonitor(commands.Cog):
         await self.broadcast()
 
     async def broadcast(self):
-        timestr = datetime.now().strftime('EDT %H:%M')
+        timestr = datetime.datetime.now(edt).strftime('EDT %H:%M')
         for iid in self.notifs:
             usr = self.bot.get_user(iid)
             await usr.send(f'`{timestr}`  {self.last_state}')
