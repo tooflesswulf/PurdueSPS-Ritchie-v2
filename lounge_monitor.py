@@ -66,11 +66,6 @@ class LoungeMonitor(commands.Cog):
                 self.broadcast()
             #     await self.key_ch.send(self.last_state)
 
-    @commands.command()
-    @my_util.in_guild(286028084287635456)
-    async def test(self, ctx: commands.Context):
-        await self.broadcast()
-
     async def broadcast(self):
         timestr = datetime.datetime.now(edt).strftime('EDT %H:%M')
         for iid in self.notifs:
