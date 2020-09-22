@@ -1,7 +1,7 @@
 import discord
 from discord.ext import tasks, commands
 from typing import List, Tuple, Dict
-from datetime import date
+from datetime import datetime
 import pickle
 import my_util
 import time
@@ -71,7 +71,7 @@ class LoungeMonitor(commands.Cog):
         await self.broadcast()
 
     async def broadcast(self):
-        timestr = date.now().strftime('EDT %H:%M')
+        timestr = datetime.now().strftime('EDT %H:%M')
         for iid in self.notifs:
             usr = self.bot.get_user(iid)
             await usr.send(f'`{timestr}`  {self.last_state}')
