@@ -3,6 +3,7 @@ from discord.ext import tasks, commands
 from typing import List, Tuple, Dict
 from datetime import date
 import pickle
+import my_util
 import time
 
 import wiringpi
@@ -64,10 +65,17 @@ class LoungeMonitor(commands.Cog):
                 self.broadcast()
             #     await self.key_ch.send(self.last_state)
 
+    @commands.command()
+    @my_util.in_guild(481808675346841600)
+    async def test_broadcast(self, ctx: commands.Context):
+        await self.broadcast()
+
     async def broadcast(self):
         timestr = date.today().strftime('%H:%M')
         for iid in self.notifs:
-            self.bot.get_user(iid).send(f'`{timestr}`  {self.last_state}')
+            usr = self.bot.get_user(iid)
+            print(f'Notifying: {usr}')
+            await usr.send(f'`{timestr}`  {self.last_state}')
 
     @commands.command()
     async def sub(self, ctx: commands.Context):
