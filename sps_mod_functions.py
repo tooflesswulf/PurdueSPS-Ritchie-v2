@@ -36,8 +36,10 @@ class ModFunctions(commands.Cog):
                           + 'please change your server nickname to your first '
                           + 'and/or last name. If you\'re having trouble with this, '
                           + 'ask one of the administrators for help. Thanks!')
-
-        await self.join_log.send(f'{date.today().strftime('%d %b %Y')} - {member.mention}({member.display_name})')
+                          
+        # await self.join_log.send('{} - {}'.format(member.mention, date.today().strftime('%d %b %Y')))
+        datestr = date.today().strftime('%d %b %Y')
+        await self.join_log.send(f'{datestr} - {member.mention}({member.display_name})')
 
     @commands.Cog.listener()
     async def on_member_remove(self, member: discord.Member):
