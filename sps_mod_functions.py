@@ -42,11 +42,11 @@ class ModFunctions(commands.Cog):
     async def on_member_remove(self, member: discord.Member):
         if member.guild != self.guild:
             return
-        await self.admin_ch.send('A person left: {}'.format(member.mention))
+        await self.admin_ch.send(f'A person left: {member.mention}({member.display_name})')
 
     @commands.command()
     async def quiet(self, ctx: commands.Context, member: discord.Member, dur: float):
-        await ctx.send('Silenced {} for {}s'.format(member.mention, int(dur)))
+        await ctx.send(f'Silenced {member.mention} for {int(dur)}s')
         self.quiet_list[member.id] = time.time() + dur
 
     async def bot_check(self, ctx: commands.Context):

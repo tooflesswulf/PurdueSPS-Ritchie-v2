@@ -63,7 +63,7 @@ class LoungeMonitor(commands.Cog):
         if self.last_change + self.change_timeout < time.time():
             changed = await self.check_door()
             if changed:
-                self.broadcast()
+                await self.broadcast()
             #     await self.key_ch.send(self.last_state)
 
     async def broadcast(self):
