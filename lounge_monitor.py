@@ -64,13 +64,14 @@ class LoungeMonitor(commands.Cog):
             changed = await self.check_door()
             if changed:
                 await self.broadcast()
-            #     await self.key_ch.send(self.last_state)
 
     async def broadcast(self):
         timestr = datetime.datetime.now(edt).strftime('EDT %H:%M')
         for iid in self.notifs:
             usr = self.bot.get_user(iid)
             await usr.send(f'`{timestr}`  {self.last_state}')
+
+        await self.key_ch.send(f'`{timestr}`  {self.last_state}')
 
     @commands.command()
     async def sub(self, ctx: commands.Context):
