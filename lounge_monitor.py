@@ -71,7 +71,7 @@ class LoungeMonitor(commands.Cog):
             usr = self.bot.get_user(iid)
             await usr.send(f'`{timestr}`  {self.last_state}')
 
-        await self.key_ch.send(f'`{timestr}`  {self.last_state}')
+        # await self.key_ch.send(f'`{timestr}`  {self.last_state}')
 
     @commands.command()
     async def sub(self, ctx: commands.Context):
