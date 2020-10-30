@@ -40,6 +40,8 @@ class LoungeMonitor(commands.Cog):
             to_send = MSG_OPEN if door_state else MSG_CLOSED
         except:
             to_send = MSG_ERR
+            
+        print('Door status: ' + to_send)
 
         if self.last_state != to_send:
             await self.bot.change_presence(activity=discord.Game(to_send))
