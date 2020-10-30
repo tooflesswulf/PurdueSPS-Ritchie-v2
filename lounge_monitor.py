@@ -77,7 +77,7 @@ class LoungeMonitor(commands.Cog):
             if usr is not None:
                 await usr.send(f'`{timestr}`  {self.last_state}')
 
-        # await self.key_ch.send(f'`{timestr}`  {self.last_state}')
+        await self.key_ch.send(f'`{timestr}`  {self.last_state}')
 
     @commands.command()
     async def sub(self, ctx: commands.Context):
