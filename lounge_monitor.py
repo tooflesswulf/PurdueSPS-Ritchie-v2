@@ -58,10 +58,6 @@ class LoungeMonitor(commands.Cog):
         await self.check_door()
         await ctx.send(self.last_state)
 
-    @door_monitor.before_loop
-    async def before_door_monitor(self):
-        await self.bot.wait_until_ready()
-
     @tasks.loop(seconds=1)
     async def door_monitor(self):
         print('Door monitor loop')
@@ -69,6 +65,10 @@ class LoungeMonitor(commands.Cog):
             changed = await self.check_door()
             if changed:
                 await self.broadcast()
+
+    @door_monitor.before_loop
+    async def before_door_monitor(self):
+        await self.bot.wait_until_ready()
 
     async def broadcast(self):
         timestr = datetime.datetime.now(edt).strftime('EDT %H:%M')
