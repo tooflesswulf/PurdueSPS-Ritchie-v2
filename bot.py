@@ -47,6 +47,12 @@ async def err(ctx: discord.ext.commands.Context):
             await ctx.send(l)
 
 
+@client.command()
+@my_util.in_guild(286028084287635456)
+async def reboot(ctx: discord.ext.commands.Context):
+    exit(0)
+
+
 if __name__ == '__main__':
     with open('token.txt', 'r') as f:
         tok = f.readline()
