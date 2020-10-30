@@ -74,7 +74,8 @@ class LoungeMonitor(commands.Cog):
         timestr = datetime.datetime.now(edt).strftime('EDT %H:%M')
         for iid in self.notifs:
             usr = self.bot.get_user(iid)
-            await usr.send(f'`{timestr}`  {self.last_state}')
+            if usr is not None:
+                await usr.send(f'`{timestr}`  {self.last_state}')
 
         # await self.key_ch.send(f'`{timestr}`  {self.last_state}')
 
