@@ -23,6 +23,7 @@ class LoungeMonitor(commands.Cog):
         self.last_change = -change_timeout
         self.change_timeout = change_timeout
         self.last_state = MSG_ERR
+        self.door_monitor.start()
 
         wiringpi.wiringPiSetup()
         wiringpi.pinMode(sensor_pin, 0)
@@ -40,8 +41,6 @@ class LoungeMonitor(commands.Cog):
             to_send = MSG_OPEN if door_state else MSG_CLOSED
         except:
             to_send = MSG_ERR
-            
-        print('Door status: ' + to_send)
 
         if self.last_state != to_send:
             await self.bot.change_presence(activity=discord.Game(to_send))
@@ -53,15 +52,19 @@ class LoungeMonitor(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         self.key_ch = self.bot.get_channel(756578279758102688)
-        self.door_monitor.start()
 
     @commands.command()
     async def lounge(self, ctx: commands.Context):
         await self.check_door()
         await ctx.send(self.last_state)
 
+    @door_monitor.before_loop
+    async def before_door_monitor(self):
+        await self.bot.wait_until_ready()
+
     @tasks.loop(seconds=1)
     async def door_monitor(self):
+        print('Door monitor loop')
         if self.last_change + self.change_timeout < time.time():
             changed = await self.check_door()
             if changed:
