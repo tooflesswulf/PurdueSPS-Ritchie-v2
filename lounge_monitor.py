@@ -8,7 +8,7 @@ import time
 
 import wiringpi
 sensor_pin = 16
-edt = datetime.timezone(datetime.timedelta(hours=-4))
+edt = datetime.timezone(datetime.timedelta(hours=-5))
 
 MSG_OPEN = 'Lounge is Open!'
 MSG_CLOSED = 'Lounge is Closed.'
@@ -71,7 +71,7 @@ class LoungeMonitor(commands.Cog):
         await self.bot.wait_until_ready()
 
     async def broadcast(self):
-        timestr = datetime.datetime.now(edt).strftime('EDT %H:%M')
+        timestr = datetime.datetime.now(edt).strftime('EST %H:%M')
         for iid in self.notifs:
             usr = self.bot.get_user(iid)
             if usr is not None:
