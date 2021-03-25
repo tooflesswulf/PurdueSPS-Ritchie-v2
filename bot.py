@@ -26,6 +26,10 @@ async def on_ready():
     if hello_ch is not None:
         await hello_ch.send('(Re)starting bot!')
 
+    nepo = client.get_channel(481813325332873217)
+    if nepo is not None:
+        await nepo.send('Updating Albert version 21.... Done!')
+
 
 @client.command()
 @my_util.in_guild(286028084287635456)
